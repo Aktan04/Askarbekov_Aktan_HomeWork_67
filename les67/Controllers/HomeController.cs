@@ -13,12 +13,22 @@ namespace WebApplication3.Controllers
     {
         public IActionResult Index()
         {
-            return View("Main");
+            var model = new IndexViewModel
+            {
+                Rows = new List<string>(),
+                PageTitle = "Main Page",
+                Page = 1
+            };
+            ViewResult result = View("Main", model);
+            result.StatusCode = 200;
+            ViewData["Message"] = "Добрый день, это тестовый текст на главной странице";
+            return result;
         }
 
         public IActionResult Privacy()
         {
-            return View("Policy");
+            ViewData["Policy"] = "Текст политики конфидециальности сайта.";
+            return View("Privacy");
         }
 
         public IActionResult TestPage(int page)
