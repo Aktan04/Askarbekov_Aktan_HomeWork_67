@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApplication3;
 using WebApplication3.Controllers;
+using WebApplication3.Models;
 
 public class HomeControllerTests
 {
@@ -29,5 +30,17 @@ public class HomeControllerTests
         Assert.Equal(39, (result?.ViewData["Policy"] as string).Length);
     }
  
-        
+    [Fact]
+    public void TestPageTest()
+    {
+        var controller = new HomeController();
+        int initialPage = 1;
+        var result = controller.TestPage(initialPage) as ViewResult;
+        Assert.NotNull(result);
+        Assert.Equal(initialPage + 1, controller.ViewBag.PageIncrement);
+        Assert.IsType<TestPageViewModel>(result.Model);
+        var model = result.Model as TestPageViewModel;
+        Assert.Equal(initialPage + 1, model.Page);
+    }
+    
 }
